@@ -46,5 +46,12 @@ namespace WebAPI_prog3.Controllers
             //retorna se encontrar dados
             return editora;
         }
+
+        //POST api/Editoras/Create
+        [HttpPost("Create")]
+        public async Task<StatusCodeResult> Create([FromBody] Editora editora)
+        {
+
+        }
     }
 }
