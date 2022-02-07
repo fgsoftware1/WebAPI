@@ -30,6 +30,11 @@ namespace WebAPI_prog3.Controllers
         [HttpGet("Details/{id}")]
         public async Task<object> Details(int id)
         {
+            //id vazio?
+            if(id == null)
+            {
+                return NotFound();
+            }                        
             //consulta dos dados na BD com a função FirstOrDefaultAsync
             var editora = await _context.Editoras.FirstOrDefaultAsync(m => m.IdEditora == id);
         }
