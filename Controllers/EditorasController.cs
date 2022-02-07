@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebAPI_prog3.Models;
@@ -31,10 +30,10 @@ namespace WebAPI_prog3.Controllers
         public async Task<object> Details(int id)
         {
             //id vazio?
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
-            }                        
+            }
             //consulta dos dados na BD com a função FirstOrDefaultAsync
             var editora = await _context.Editoras.FirstOrDefaultAsync(m => m.IdEditora == id);
         }

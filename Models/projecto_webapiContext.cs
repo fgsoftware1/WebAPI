@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-#nullable disable
+﻿#nullable disable
 
 namespace WebAPI_prog3.Models
 {
