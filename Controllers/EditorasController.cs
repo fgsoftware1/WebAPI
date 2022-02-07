@@ -36,6 +36,15 @@ namespace WebAPI_prog3.Controllers
             }
             //consulta dos dados na BD com a função FirstOrDefaultAsync
             var editora = await _context.Editoras.FirstOrDefaultAsync(m => m.IdEditora == id);
+
+            //nulo ou vazio? ""Not Found"
+            if (editora == null)
+            {
+                return NotFound();
+            }
+
+            //retorna se encontrar dados
+            return editora;
         }
     }
 }
