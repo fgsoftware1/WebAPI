@@ -1,34 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebAPI_prog3.Models;
 
 namespace WebAPI_prog3.Controllers
 {
-    //caminho genérico para invocar um controlador
-    [ApiController]
-    [Route("api/[controller]")]
-
-    public class LivroController : Controller
+    public class CidadeController : Controller
     {
         private readonly projecto_webapiContext _context;
 
-        public LivroController(projecto_webapiContext context)
+        public CidadeController(projecto_webapiContext context)
         {
             _context = context;
         }
 
-        // GET: Livro
+        // GET: Cidade
         public async Task<IActionResult> Index()
         {
-            var projecto_webapiContext = _context.Livros.Include(l => l.IdEditoraNavigation);
+            var projecto_webapiContext = _context.Cidades.Include(c => c.IdPaisNavigation);
             return View(await projecto_webapiContext.ToListAsync());
         }
 
-        // GET: Livro/Details/5
+        // GET: Cidade/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,42 +33,42 @@ namespace WebAPI_prog3.Controllers
                 return NotFound();
             }
 
-            var livro = await _context.Livros
-                .Include(l => l.IdEditoraNavigation)
-                .FirstOrDefaultAsync(m => m.IdLivro == id);
-            if (livro == null)
+            var cidade = await _context.Cidades
+                .Include(c => c.IdPaisNavigation)
+                .FirstOrDefaultAsync(m => m.IdCidade == id);
+            if (cidade == null)
             {
                 return NotFound();
             }
 
-            return View(livro);
+            return View(cidade);
         }
 
-        // GET: Livro/Create
+        // GET: Cidade/Create
         public IActionResult Create()
         {
-            ViewData["IdEditora"] = new SelectList(_context.Editoras, "IdEditora", "Nome");
+            ViewData["IdPais"] = new SelectList(_context.Pais, "IdPais", "Moeda");
             return View();
         }
 
-        // POST: Livro/Create
+        // POST: Cidade/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdLivro,Nome,Isbn,NumeroPaginas,IdEditora")] Livro livro)
+        public async Task<IActionResult> Create([Bind("IdCidade,Nome,Regiao,IdPais")] Cidade cidade)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(livro);
+                _context.Add(cidade);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEditora"] = new SelectList(_context.Editoras, "IdEditora", "Nome", livro.IdEditora);
-            return View(livro);
+            ViewData["IdPais"] = new SelectList(_context.Pais, "IdPais", "Moeda", cidade.IdPais);
+            return View(cidade);
         }
 
-        // GET: Livro/Edit/5
+        // GET: Cidade/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,23 +76,23 @@ namespace WebAPI_prog3.Controllers
                 return NotFound();
             }
 
-            var livro = await _context.Livros.FindAsync(id);
-            if (livro == null)
+            var cidade = await _context.Cidades.FindAsync(id);
+            if (cidade == null)
             {
                 return NotFound();
             }
-            ViewData["IdEditora"] = new SelectList(_context.Editoras, "IdEditora", "Nome", livro.IdEditora);
-            return View(livro);
+            ViewData["IdPais"] = new SelectList(_context.Pais, "IdPais", "Moeda", cidade.IdPais);
+            return View(cidade);
         }
 
-        // POST: Livro/Edit/5
+        // POST: Cidade/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdLivro,Nome,Isbn,NumeroPaginas,IdEditora")] Livro livro)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCidade,Nome,Regiao,IdPais")] Cidade cidade)
         {
-            if (id != livro.IdLivro)
+            if (id != cidade.IdCidade)
             {
                 return NotFound();
             }
@@ -104,12 +101,12 @@ namespace WebAPI_prog3.Controllers
             {
                 try
                 {
-                    _context.Update(livro);
+                    _context.Update(cidade);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LivroExists(livro.IdLivro))
+                    if (!CidadeExists(cidade.IdCidade))
                     {
                         return NotFound();
                     }
@@ -120,11 +117,11 @@ namespace WebAPI_prog3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEditora"] = new SelectList(_context.Editoras, "IdEditora", "Nome", livro.IdEditora);
-            return View(livro);
+            ViewData["IdPais"] = new SelectList(_context.Pais, "IdPais", "Moeda", cidade.IdPais);
+            return View(cidade);
         }
 
-        // GET: Livro/Delete/5
+        // GET: Cidade/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,31 +129,31 @@ namespace WebAPI_prog3.Controllers
                 return NotFound();
             }
 
-            var livro = await _context.Livros
-                .Include(l => l.IdEditoraNavigation)
-                .FirstOrDefaultAsync(m => m.IdLivro == id);
-            if (livro == null)
+            var cidade = await _context.Cidades
+                .Include(c => c.IdPaisNavigation)
+                .FirstOrDefaultAsync(m => m.IdCidade == id);
+            if (cidade == null)
             {
                 return NotFound();
             }
 
-            return View(livro);
+            return View(cidade);
         }
 
-        // POST: Livro/Delete/5
+        // POST: Cidade/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var livro = await _context.Livros.FindAsync(id);
-            _context.Livros.Remove(livro);
+            var cidade = await _context.Cidades.FindAsync(id);
+            _context.Cidades.Remove(cidade);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LivroExists(int id)
+        private bool CidadeExists(int id)
         {
-            return _context.Livros.Any(e => e.IdLivro == id);
+            return _context.Cidades.Any(e => e.IdCidade == id);
         }
     }
 }

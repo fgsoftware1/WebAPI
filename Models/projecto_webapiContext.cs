@@ -1,4 +1,8 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
+#nullable disable
 
 namespace WebAPI_prog3.Models
 {
@@ -13,8 +17,10 @@ namespace WebAPI_prog3.Models
         {
         }
 
+        public virtual DbSet<Cidade> Cidades { get; set; }
         public virtual DbSet<Editora> Editoras { get; set; }
         public virtual DbSet<Livro> Livros { get; set; }
+        public virtual DbSet<Pais> Pais { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,6 +35,38 @@ namespace WebAPI_prog3.Models
         {
             modelBuilder.HasCharSet("utf8mb4")
                 .UseCollation("utf8mb4_general_ci");
+
+            modelBuilder.Entity<Cidade>(entity =>
+            {
+                entity.HasKey(e => e.IdCidade)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("cidade");
+
+                entity.HasIndex(e => e.IdPais, "FK_Pais");
+
+                entity.Property(e => e.IdCidade)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID_Cidade");
+
+                entity.Property(e => e.IdPais)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID_Pais");
+
+                entity.Property(e => e.Nome)
+                    .IsRequired()
+                    .HasMaxLength(75);
+
+                entity.Property(e => e.Regiao)
+                    .IsRequired()
+                    .HasMaxLength(75);
+
+                entity.HasOne(d => d.IdPaisNavigation)
+                    .WithMany(p => p.Cidades)
+                    .HasForeignKey(d => d.IdPais)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Pais");
+            });
 
             modelBuilder.Entity<Editora>(entity =>
             {
@@ -83,6 +121,24 @@ namespace WebAPI_prog3.Models
                     .HasForeignKey(d => d.IdEditora)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Editora");
+            });
+
+            modelBuilder.Entity<Pais>(entity =>
+            {
+                entity.HasKey(e => e.IdPais)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("pais");
+
+                entity.Property(e => e.IdPais)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("ID_Pais");
+
+                entity.Property(e => e.Moeda)
+                    .IsRequired()
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.Populacao).HasColumnType("int(100)");
             });
 
             OnModelCreatingPartial(modelBuilder);

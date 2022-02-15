@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebAPI_prog3.Models;
@@ -37,7 +38,7 @@ namespace WebAPI_prog3.Controllers
             //consulta dos dados na BD com a função FirstOrDefaultAsync
             var editora = await _context.Editoras.FirstOrDefaultAsync(m => m.IdEditora == id);
 
-            //nulo ou vazio? ""Not Found"
+            //nulo ou vazio? "Not Found"
             if (editora == null)
             {
                 return NotFound();
@@ -51,7 +52,7 @@ namespace WebAPI_prog3.Controllers
         [HttpPost("Create")]
         public async Task<StatusCodeResult> Create([FromBody] Editora editora)
         {
-
+            return Ok();
         }
     }
 }
