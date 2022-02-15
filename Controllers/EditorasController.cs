@@ -28,7 +28,7 @@ namespace WebAPI_prog3.Controllers
 
         //GET api/Editoras/Details
         [HttpGet("Details/{id}")]
-        public async Task<object> Details(int id)
+        public async Task<object> Details(int? id)
         {
             //id vazio?
             if (id == null)
