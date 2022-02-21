@@ -9,6 +9,9 @@ using WebAPI_prog3.Models;
 
 namespace WebAPI_prog3.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
+
     public class PaisController : Controller
     {
         private readonly projecto_webapiContext _context;
@@ -46,22 +49,16 @@ namespace WebAPI_prog3.Controllers
 
         // POST api/Pais/Create
         [HttpPost("Create")]
-        public async Task<StatusCodeResult> Create(FromBody[] Pais pais)
+        public async Task<StatusCodeResult> Create([FromBody] Pais pais)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(Pais);
+                _context.Add(pais);
                 await _context.SaveChangesAsync();
                 return Ok();
             }
 
             return BadRequest();
-        }
-        
-        // PUT api/Pais/Edit
-        [HttpPut("Edit")]
-        public async Task<StatusCodeResult> Edit(FromBody[] Pais pais)
-        {
         }
     }
 }

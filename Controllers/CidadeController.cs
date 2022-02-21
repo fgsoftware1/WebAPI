@@ -18,14 +18,14 @@ namespace WebAPI_prog3.Controllers
             _context = context;
         }
 
-        // GET: Cidade
+        // GET: Cidades
         public async Task<IActionResult> Index()
         {
             var projecto_webapiContext = _context.Cidades.Include(c => c.IdPaisNavigation);
             return View(await projecto_webapiContext.ToListAsync());
         }
 
-        // GET: Cidade/Details/5
+        // GET: Cidades/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,14 +44,14 @@ namespace WebAPI_prog3.Controllers
             return View(cidade);
         }
 
-        // GET: Cidade/Create
+        // GET: Cidades/Create
         public IActionResult Create()
         {
             ViewData["IdPais"] = new SelectList(_context.Pais, "IdPais", "Moeda");
             return View();
         }
 
-        // POST: Cidade/Create
+        // POST: Cidades/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -68,7 +68,7 @@ namespace WebAPI_prog3.Controllers
             return View(cidade);
         }
 
-        // GET: Cidade/Edit/5
+        // GET: Cidades/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,7 +85,7 @@ namespace WebAPI_prog3.Controllers
             return View(cidade);
         }
 
-        // POST: Cidade/Edit/5
+        // POST: Cidades/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -121,7 +121,7 @@ namespace WebAPI_prog3.Controllers
             return View(cidade);
         }
 
-        // GET: Cidade/Delete/5
+        // GET: Cidades/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,7 +140,7 @@ namespace WebAPI_prog3.Controllers
             return View(cidade);
         }
 
-        // POST: Cidade/Delete/5
+        // POST: Cidades/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
