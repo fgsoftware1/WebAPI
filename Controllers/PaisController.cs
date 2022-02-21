@@ -60,5 +60,43 @@ namespace WebAPI_prog3.Controllers
 
             return BadRequest();
         }
+
+        //PUT api/Pai/Edit
+        [HttpPut("Edit")]
+        public async Task<StatusCodeResult> Edit([FromBody] Pais pais)
+        {
+            if (pais.IdPais == 0)
+            {
+                return NotFound();
+            }
+
+            var result = await _context.Pais.FindAsync(pais.IdPais);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            result.Populacao = pais.Populacao;
+            result.Moeda = pais.Moeda;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(result);
+
+                    await _context.SaveChangesAsync();
+
+                    return Ok();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return NotFound();
+                }
+            }
+
+            return BadRequest();
+        }
     }
 }

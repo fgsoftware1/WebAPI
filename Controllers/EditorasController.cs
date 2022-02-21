@@ -22,6 +22,7 @@ namespace WebAPI_prog3.Controllers
         }
 
         // GET api/Editoras
+        [HttpGet]
         public async Task<List<Editora>> GetAll_Editora()
         {
             return await _context.Editoras.ToListAsync();
