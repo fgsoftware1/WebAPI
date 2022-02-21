@@ -9,6 +9,9 @@ using WebAPI_prog3.Models;
 
 namespace WebAPI_prog3.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
+
     public class CidadeController : Controller
     {
         private readonly projecto_webapiContext _context;
