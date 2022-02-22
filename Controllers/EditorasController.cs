@@ -62,8 +62,8 @@ namespace WebAPI_prog3.Controllers
             return BadRequest();
         }
 
-        [HttpPut("Edit")]
         //PUT api/Editoras/Edit
+        [HttpPut("Edit")]
         public async Task<StatusCodeResult> Edit([FromBody] Editora editora)
         {
             if(editora.IdEditora == 0)
@@ -98,5 +98,7 @@ namespace WebAPI_prog3.Controllers
 
             return BadRequest();
         }
+
+
     }
 }
