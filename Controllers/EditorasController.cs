@@ -99,6 +99,23 @@ namespace WebAPI_prog3.Controllers
             return BadRequest();
         }
 
+        //DELETE api/Editoras/Delete
+        [HttpDelete("Delete")]
+        public async Task<StatusCodeResult> Delete_editora(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
 
+            var editora = await _context.Editoras.FirstOrDefaultAsync(m => m.IdEditora == id);
+
+            if(editora == null)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
     }
 }
