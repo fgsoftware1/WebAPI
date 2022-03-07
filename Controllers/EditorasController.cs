@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebAPI_prog3.Models;
 
 namespace WebAPI_prog3.Controllers
@@ -66,14 +63,14 @@ namespace WebAPI_prog3.Controllers
         [HttpPut("Edit")]
         public async Task<StatusCodeResult> Edit([FromBody] Editora editora)
         {
-            if(editora.IdEditora == 0)
+            if (editora.IdEditora == 0)
             {
                 return NotFound();
             }
 
             var result = await _context.Editoras.FindAsync(editora.IdEditora);
 
-            if(result == null)
+            if (result == null)
             {
                 return NotFound();
             }
@@ -90,7 +87,8 @@ namespace WebAPI_prog3.Controllers
                     await _context.SaveChangesAsync();
 
                     return Ok();
-                }catch(DbUpdateConcurrencyException)
+                }
+                catch (DbUpdateConcurrencyException)
                 {
                     return NotFound();
                 }
@@ -103,14 +101,14 @@ namespace WebAPI_prog3.Controllers
         [HttpDelete("Delete")]
         public async Task<StatusCodeResult> Delete_editora(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var editora = await _context.Editoras.FirstOrDefaultAsync(m => m.IdEditora == id);
 
-            if(editora == null)
+            if (editora == null)
             {
                 return NotFound();
             }
