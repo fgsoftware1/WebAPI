@@ -54,9 +54,7 @@ namespace WebAPI_prog3.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(cidade);
-
                 await _context.SaveChangesAsync();
-
                 return Ok();
             }
 

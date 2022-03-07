@@ -44,7 +44,6 @@ namespace WebAPI_prog3.Controllers
             return editora;
         }
 
-
         // GET api/Editoras/Create
         [HttpPost("Create")]
         public async Task<StatusCodeResult> Create([FromBody] Editora editora)
