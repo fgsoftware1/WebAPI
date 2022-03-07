@@ -102,7 +102,7 @@ namespace WebAPI_prog3.Controllers
         }
 
         //DELETE api/Pais/Delete
-        [HttpDelete("Delete")]
+        [HttpDelete("{id}")]
         public async Task<StatusCodeResult> Delete_cidade(int? id)
         {
             if (id == null)
@@ -116,6 +116,10 @@ namespace WebAPI_prog3.Controllers
             {
                 return NotFound();
             }
+
+            _context.Remove(cidade);
+
+            await _context.SaveChangesAsync();
 
             return Ok();
         }

@@ -99,20 +99,24 @@ namespace WebAPI_prog3.Controllers
         }
 
         //DELETE api/Pais/Delete
-        [HttpDelete("Delete")]
-        public async Task<StatusCodeResult> Delete_editora(int? id)
+        [HttpDelete("{id}")]
+        public async Task<StatusCodeResult> Delete_pais(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var editora = await _context.Editoras.FirstOrDefaultAsync(m => m.IdEditora == id);
+            var pais = await _context.Pais.FirstOrDefaultAsync(m => m.IdPais == id);
 
-            if (editora == null)
+            if (pais == null)
             {
                 return NotFound();
             }
+
+            _context.Remove(pais);
+
+            await _context.SaveChangesAsync();
 
             return Ok();
         }
