@@ -60,7 +60,7 @@ namespace WebAPI_prog3.Controllers
             return BadRequest();
         }
 
-        //PUT api/Pai/Edit
+        //PUT api/Pais/Edit
         [HttpPut("Edit")]
         public async Task<StatusCodeResult> Edit([FromBody] Pais pais)
         {
@@ -96,6 +96,25 @@ namespace WebAPI_prog3.Controllers
             }
 
             return BadRequest();
+        }
+
+        //DELETE api/Pais/Delete
+        [HttpDelete("Delete")]
+        public async Task<StatusCodeResult> Delete_editora(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var editora = await _context.Editoras.FirstOrDefaultAsync(m => m.IdEditora == id);
+
+            if (editora == null)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }
